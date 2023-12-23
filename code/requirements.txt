@@ -1,0 +1,4 @@
+ipython
+numpy
+pandas
+opencv-contrib-python
