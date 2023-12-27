@@ -33,7 +33,8 @@ Once inside of *Ipython*
 In [1]: %run makeROIthroughDB.py
 ```
 This action triggers a interactive window that allows to define the image ROI as a rectangle, see image below
-IMAGENNNNN
+![](/aux_src/ROI_1.png)
+![](/aux_src/ROI_2.png)
 Once you define the image ROI, the system stores its coordinates and a cropped image with the ROI in the */variables/ROI/coordinates* and */variables/ROI/images* directories, these structure file system replicates the original */DB* structure file system
 
 
