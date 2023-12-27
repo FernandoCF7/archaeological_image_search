@@ -3,6 +3,8 @@ import sys
 import cv2 as cv
 import pandas as pd
 
+from sys import exit as sys_exit
+
 #Add to sys.path the path to ROI/code
 currentPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append("{0}/../../ROI/code".format(currentPath))
@@ -12,7 +14,19 @@ from built_roi import BUILT_ROI
 #-----------------------------------------------------------------------------#
 #browse into image directory
 for dir_path, dir_names, image_names in os.walk(os.path.join("..", "..", "DB")):
-    
+
+    #-------------------------------------------------------------------------#
+    #discard those images that have not a valid image extension
+    tmp = []
+    for image_name in image_names:
+        image_name_splited = image_name.split(".")
+        if len(image_name_splited) > 1 and image_name_splited[-1].lower() in ["jpg", "jpeg", "png", "gif", "tif", "tiff", "bmp", "webp", "pbm", "pgm", "ppm", "exr"]:
+            tmp.append(image_name)
+        else:
+            print("Warning: file {}/{} has not a valid image extension".format(dir_path, image_name))
+    image_names = tmp 
+    #-------------------------------------------------------------------------#
+
     #-------------------------------------------------------------------------#
     #Create the csv file (if no exist) to store the ROIcoordinates
     

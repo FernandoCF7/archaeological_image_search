@@ -16,9 +16,14 @@ class BUILT_ROI:
     #-------------------------------------------------------------------------#
     def makeROI(self):
         
-        global drawingRectangle, drawingLine, point1, point2, RectanglePosition
-        global askToSave, iterador
-        
+        global drawingRectangle
+        global drawingLine
+        global point1
+        global point2
+        global RectanglePositio
+        global askToSave
+        global iterado
+         
         #---------------------------------------------------------------------#
         #Set a window image
         cv.namedWindow(self.I_pathName, cv.WINDOW_NORMAL)
