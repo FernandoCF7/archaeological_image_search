@@ -22,7 +22,7 @@ Install all the python depencendes (modules) with the requirements.txt file
 (env)user@foo:~/code$ pip install -r requirements.txt
 ```
 #### The DB image file system
-The project includes a */DB* directory, it must store the images to train the system, once you have them (inside the directory) in next stages the system will allow you to create a ROI (Region of Interest) over each image to define the feature extraction area. Note: dosen't mather the file system order inside the DB directory, the program will browse over it; besides, the allowed image format are: *jpg*, *jpeg*, *png*, *gif*, *tif*, *tiff*, *bmp*, *webp*, *pbm*, *pgm*, *ppm*, *exr*
+The project includes a */DB* directory, it must store the images to train the system, once you have them (inside the directory) in next stages the system will allow you to create a ROI (Region of Interest) over each image to define the feature extraction area. Note: dosen't mather the file system order inside the DB directory, the program will browse over it; besides, the allowed image format are *.jpg* and *.tif*
 #### The ROI stage
 To make the ROI (Region of Interest) of the images, run the *code/ROI/code/makeROIthroughDB.py* python file, notice that you can use the *Ipython* interactive console (in the makeROIthroughDB.py path):
 ```console
@@ -36,9 +36,6 @@ This action triggers a interactive window that allows to define the image ROI as
 ![](/aux_src/ROI_1.png)
 ![](/aux_src/ROI_2.png)
 Once you define the image ROI, the system stores its coordinates and a cropped image with the ROI in the */variables/ROI/coordinates* and */variables/ROI/images* directories, these structure file system replicates the original */DB* structure file system
-#### HOG extraction
-The HOG (Histograms Of Oriented Gradients) feature extraction image is made with the HOG module. Run the code/HOG/code/HOG_extraction.py file to generate the HOG extraction per image; it will take the ROI images generated in the previous stage. The HOG features are stored using hdf5 methodology at code/variables/HOG/HOGallImgs.hdf5 and code/variables/HOG/HOGshapeAllImgs.hdf5
-#### Dictionary of HOG-words
-makeDictionary
+
 
 [//]: # "Contributions"
