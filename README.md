@@ -9,7 +9,6 @@ ___
 The image project stages are handled by the [OpenCV - Open Computer Vision Library](https://opencv.org/) (with the opencv-contrib-python module). Moreover, the data-base image file system is gestioned by the hdf5 (Hierarchical Data Format) approach with the [h5py python module](https://docs.h5py.org/en/stable/). Besides, the project requires other python modules as numpy and pandas, you can check a list of them in the [requirements.txt](/code/requirements.txt) project file. The image feature extraction is making with the [HOG (Histograms Of Oriented Gradients)](https://www.researchgate.net/publication/281327886_Histograms_of_Oriented_Gradients_for_Human_Detection) algorithm and the indexing step is based on the [PBoW (Pyramid Bag of Words)](https://ieeexplore.ieee.org/document/1238663) method.
 ___
 
-https://github.com/FernandoCF7/archaeological_image_search/assets/101651797/facbdfee-224d-406b-a36d-deaddc642d1d
 <video width="630" height="300" src="https://github.com/FernandoCF7/archaeological_image_search/assets/101651797/facbdfee-224d-406b-a36d-deaddc642d1d.mp4"></video>
 
 ### Installation and Use
