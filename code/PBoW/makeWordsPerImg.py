@@ -13,18 +13,18 @@ import pickle
 
 #-----------------------------------------------------------------------------#
 #load the dictionary
-kmeans = pickle.load( open(os.path.join("..", "..", "variables", "dictionary", "dict_300words.pkl"), "rb") )
+kmeans = pickle.load( open(os.path.join("output_src", "dictionary", "dict_300words.pkl"), "rb") )
 #-----------------------------------------------------------------------------#
 
 #-----------------------------------------------------------------------------#
 #Load the HOG vectors imgs names
-with h5py.File( os.path.join("..", "..", "variables", "HOG", "HOGallImgs.hdf5"), "r" ) as f:
+with h5py.File( os.path.join("output_src", "HOG", "HOGallImgs.hdf5"), "r" ) as f:
     HOGlist_ImgsNames = list(f.keys())
 #-----------------------------------------------------------------------------#
 
 #-----------------------------------------------------------------------------#
 #Read or make, if doesn't exist, the wordsPerImg.plk file
-with h5py.File( os.path.join("..", "..", "variables", "PBoW", "imgWords", "wordsPerImg.hdf5"), "a" ) as f:
+with h5py.File( os.path.join("output_src", "PBoW", "imgWords", "wordsPerImg.hdf5"), "a" ) as f:
     wordsPerImg_List = list(f.keys())
 #-----------------------------------------------------------------------------#
     
@@ -42,11 +42,10 @@ HOGlist_ImgsNames = HOGlist_ImgsNames[~logicToProcess]
 #-----------------------------------------------------------------------------#
 
 #-----------------------------------------------------------------------------#
-with h5py.File( os.path.join("..", "..", "variables", "HOG", "HOGallImgs.hdf5"), "a" ) as f:
+with h5py.File( os.path.join("output_src", "HOG", "HOGallImgs.hdf5"), "a" ) as f:
     
-    with h5py.File( os.path.join("..", "..", "variables", "PBoW", "imgWords", "wordsPerImg.hdf5"), "a" ) as g:
+    with h5py.File( os.path.join("output_src", "PBoW", "imgWords", "wordsPerImg.hdf5"), "a" ) as g:
         
         for image in HOGlist_ImgsNames:
-            print(image)
             g.create_dataset( image, data=kmeans.predict(f[image][()]) )        
 #-----------------------------------------------------------------------------#

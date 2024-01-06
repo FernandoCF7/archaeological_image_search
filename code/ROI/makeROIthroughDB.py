@@ -3,17 +3,14 @@ import sys
 import cv2 as cv
 import pandas as pd
 
-from sys import exit as sys_exit
-
-#Add to sys.path the path to ROI/code
-currentPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.append("{0}/../../ROI/code".format(currentPath))
+#Add to sys.path the path to ROI
+sys.path.append("./ROI")
 
 from built_roi import BUILT_ROI
 
 #-----------------------------------------------------------------------------#
 #browse into image directory
-for dir_path, dir_names, image_names in os.walk(os.path.join("..", "..", "DB")):
+for dir_path, dir_names, image_names in os.walk(os.path.join("DB")):
 
     #-------------------------------------------------------------------------#
     #discard those images that have not a valid image extension
@@ -23,7 +20,8 @@ for dir_path, dir_names, image_names in os.walk(os.path.join("..", "..", "DB")):
         if len(image_name_splited) > 1 and image_name_splited[-1].lower() in ["jpg", "jpeg", "png", "gif", "tif", "tiff", "bmp", "webp", "pbm", "pgm", "ppm", "exr"]:
             tmp.append(image_name)
         else:
-            print("Warning: file {}/{} has not a valid image extension".format(dir_path, image_name))
+            if (image_name_splited[-1]).lower() not in ["gitkeep"]:
+                print("Warning: file {}/{} has not a valid image extension".format(dir_path, image_name))
     image_names = tmp 
     #-------------------------------------------------------------------------#
 
@@ -32,7 +30,7 @@ for dir_path, dir_names, image_names in os.walk(os.path.join("..", "..", "DB")):
     
     #Set filename as current dir_path
     fileName = dir_path[9:].replace(os.path.sep,"_")
-    filePath = os.path.join("..", "..", "variables", "ROI", "coordinates", "{0}ROIcoordinates.csv".format(fileName))
+    filePath = os.path.join("output_src", "ROI", "coordinates", "{0}ROIcoordinates.csv".format(fileName))
     
     if os.path.isfile(filePath) == False:
         with open( filePath, "w" ) as f:
@@ -42,7 +40,7 @@ for dir_path, dir_names, image_names in os.walk(os.path.join("..", "..", "DB")):
     
     #-------------------------------------------------------------------------#
     #Create the directory (if no exist) to store the ROI images
-    ROIdirectoryPath = os.path.join("..", "..", "variables", "ROI", "images", "{0}".format(dir_path[9:]))
+    ROIdirectoryPath = os.path.join("output_src", "ROI", "images", "{0}".format(dir_path[9:]))
     
     #Ask if directory exist
     if os.path.isdir(ROIdirectoryPath) == False:

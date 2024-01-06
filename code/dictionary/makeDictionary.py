@@ -6,7 +6,6 @@ Created on Mon Jan 20 12:50:32 2020
 
 #-----------------------------------------------------------------------------#
 import os
-import pandas as pd
 import h5py
 from sklearn.cluster import MiniBatchKMeans
 import pickle
@@ -14,7 +13,7 @@ import pickle
 
 #-----------------------------------------------------------------------------#
 #Make the dictionary
-with h5py.File(os.path.join("..", "..", "variables", "HOG", "HOGallImgs.hdf5"), "r") as f:
+with h5py.File(os.path.join("output_src", "HOG", "HOGallImgs.hdf5"), "r") as f:
     list_ImgsNames = list(f.keys())
     
     kmeans = MiniBatchKMeans(
@@ -32,6 +31,6 @@ with h5py.File(os.path.join("..", "..", "variables", "HOG", "HOGallImgs.hdf5"), 
 #Store the dictionary
 pickle.dump(
     kmeans,
-    open(os.path.join("..", "..", "variables", "dictionary", "dict_300words.pkl"), "wb")
+    open(os.path.join("output_src", "dictionary", "dict_300words.pkl"), "wb")
 )
 #-----------------------------------------------------------------------------#

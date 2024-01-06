@@ -10,13 +10,12 @@ import pandas as pd
 import numpy as np
 import h5py
 
-currentPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.append("{0}/../../PBoW/code".format(currentPath))
+sys.path.append("./PBoW")
 from pbow import PBOW
 
 #-----------------------------------------------------------------------------#
 #load wordsPerImg.hdf5 and convert to pd.Series
-with h5py.File( os.path.join("..", "..", "variables", "PBoW", "imgWords", "wordsPerImg.hdf5"), "r" ) as f:
+with h5py.File( os.path.join("output_src", "PBoW", "imgWords", "wordsPerImg.hdf5"), "r" ) as f:
 
     wordsPerImglist = list(f.keys())
 
@@ -28,7 +27,7 @@ with h5py.File( os.path.join("..", "..", "variables", "PBoW", "imgWords", "words
 
 #-----------------------------------------------------------------------------#
 #Convert the dataset of HOGshapeAllImgs.hdf5 as pd.Series
-with h5py.File( os.path.join("..", "..", "variables", "HOG", "HOGshapeAllImgs.hdf5"), "r" ) as f:
+with h5py.File( os.path.join("output_src", "HOG", "HOGshapeAllImgs.hdf5"), "r" ) as f:
 
     list_ImgsNames = list(f.keys())
 
@@ -40,7 +39,7 @@ with h5py.File( os.path.join("..", "..", "variables", "HOG", "HOGshapeAllImgs.hd
 
 #-------------------------------------------------------------------------#
 #Make (if doesn't exist) file PBoWallImgs.hdf5-->all HOG imgs vects
-with h5py.File( os.path.join("..", "..", "variables", "PBoW", "PBoWallImgs.hdf5"), "a" ) as f:
+with h5py.File( os.path.join("output_src", "PBoW", "PBoWallImgs.hdf5"), "a" ) as f:
 
     PBoWlist_ImgsNames = list(f.keys())
 #-----------------------------------------------------------------------------#
@@ -65,6 +64,6 @@ for image in wordsPerImglist:
     hist = ( PBOW(pd_wordsPerImg[image], pd_HOGshape[image]) ).extractPBoW()
     
     #Normalize and store hist in PBoWallImgs.hdf5
-    with h5py.File( os.path.join("..", "..", "variables", "PBoW", "PBoWallImgs.hdf5"), "a" ) as f:
+    with h5py.File( os.path.join("output_src", "PBoW", "PBoWallImgs.hdf5"), "a" ) as f:
         f.create_dataset(image, data=hist)
 #-----------------------------------------------------------------------------#
