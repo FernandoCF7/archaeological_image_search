@@ -1,4 +1,5 @@
 """
+run this file each time you want to make or update the dictionary; it is not neccesary to run it each time you add new images to the DB
 Created on Mon Jan 20 12:50:32 2020
 
 @author: fernando

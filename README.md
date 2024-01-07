@@ -29,36 +29,35 @@ Install all the python depencendes (modules) with the requirements.txt file
 
 The project includes a */code/DB* directory, it must store the images to train the system, once you have them (inside the directory) in next stages the system will allow you to create a ROI (Region of Interest) over each image to define the feature extraction area. Note: dosen't mather the file system order inside the DB directory, the program will browse over it; besides, the allowed image format are: *.jpg*, *.jpeg*, *.png*, *.gif*, *.tif*, *.tiff*, *.bmp*, *.webp*, *.pbm*, *.pgm*, *.ppm* and *.exr*
 
-#### Train the system
+#### Features extraction
 
-The code/trainer.py file allows to run each system stage. With *Ipython* interactive console (at the code/ path) 
+The code/system_feature_extraction.py file allows you to run each stage (ROI, HOG and PBOW) to extract the features from each image (at code/DB). Use the *Ipython* interactive console (at the code/ path)
 ```console
 (env)user@foo:~/code/$ipython
 ```
-run:
+and run:
 ```python
-In [1]: %run trainer.py
+In [1]: %run system_feature_extraction.py
 ```
-This will execute each one of the next stages.
+Note: this process neds the /code/output_src/dictionary/dict_300words.pkl file (stores the image dictionary words of the code/DB images). When you start the project, this file dosen't exist (or if you explicitly deleted it), therefore, the program checks for the file existence and create it if it dosen't exist; but be carfully, once the file exists it will not be remade by this program (code/system_feature_extraction.py), eaven if you update your code/DB image source. Then, to remade the /code/output_src/dictionary/dict_300words.pkl file (the dictionary itself), and gain precision in recovery, you would to run the code/make_or_update_the_dictionary.py program.
 
 #### The ROI stage
 
-The ROI (Region of Interest) of the images is made with the *code/ROI/* module, you can use the *Ipython* (in the code/ROI/makeROIthroughDB.py path) to execute this proces without the code/trainer.py interface:
+The ROI (Region of Interest) of the images is made with the *code/ROI/* module, you can use the *Ipython* (in the code/ROI/makeROIthroughDB.py path) to execute this proces without the code/system_feature_extraction.py interface:
 ```python
 In [1]: %run makeROIthroughDB.py
 ```
 This stage triggers a interactive window that allows to define the ROI image as a rectangle, see image below
+
 ![](/aux_src/ROI_1.png)
+
 ![](/aux_src/ROI_2.png)
+
 Once you define the ROI image, the system stores its coordinates and a cropped image (the ROI) in the */output_src/ROI/coordinates* and */output_src/ROI/images* directories, these structure file system replicates the original */DB* structure file system
 
 #### HOG extraction
 
 The HOG (Histograms Of Oriented Gradients) feature extraction image is made with the HOG module. The code/HOG/HOG_extraction.py file generates the HOG extraction per image; it will take the ROI images generated in the previous stage. The HOG features are stored using hdf5 methodology at code/output_src/HOG/HOGallImgs.hdf5 and code/output_src/HOG/HOGshapeAllImgs.hdf5
-
-#### Dictionary of HOG-words
-
-This stage is maded with the /code/dictionary module. Here, the number of words (clusters) is set to 300, you can change it in the variable n_clusters of MiniBatchKMeans function (/code/dictionary/makeDictionary.py); alose change in the /code/PBoW/makePBoWperImg.py and /code/PBoW/pbow.py
 
 #### Pyramidal Bag of Words (PBoW)
 
@@ -66,6 +65,10 @@ This stage is made with the code/PBoW module. The /code/PBoW/makePBoWperImg.py f
 ```python
 hist = ( PBOW(pd_wordsPerImg[image], pd_HOGshape[image], numPyramidLevels=5) ).extractPBoW()
 ```
+
+#### Dictionary of HOG-words
+
+As said in the 'Features extraction' section, this satage is made when you run the code/system_feature_extraction.py file and the /code/output_src/dictionary/dict_300words.pkl file dosen't exist. If you want to remade the /code/output_src/dictionary/dict_300words.pkl file (the dictionary itself), and gain precision in recovery, you would to run the code/make_or_update_the_dictionary.py program. By dafault, the number of words (clusters) is set to 300, you can change it in the variable n_clusters of MiniBatchKMeans function (/code/make_or_update_dictionary.py) and, in the also change in the /code/PBoW/makePBoWperImg.py and /code/PBoW/pbow.py
 
 #### Recover images
 
